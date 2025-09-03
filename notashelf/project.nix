@@ -13,7 +13,7 @@
 
         src = fs.toSource {
           root = ./.;
-          fileset = [./main.asm];
+          fileset = fs.unions [./main.asm];
         };
 
         buildPhase = ''
@@ -29,7 +29,7 @@
           runHook preInstall
 
           mkdir -p $out/bin
-          install -Dm755 steampunl $out/bin
+          install -Dm755 steampunk $out/bin
 
           runHook postInstall
         '';
