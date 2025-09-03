@@ -8,7 +8,7 @@ cache = {}
 def get_all_partitions(len):
     try:
         return cache[len]
-    except:
+    except KeyError:
         factors = []
 
         for factor in range(2, len + 1):
@@ -26,7 +26,7 @@ def check_split(split, str_num, num_len):
     for i in range(0, num_len, split_width):
         current = str_num[i : i + split_width]
 
-        if current != previous and previous != None:
+        if current != previous and previous is not None:
             return False
 
         previous = current
@@ -42,16 +42,18 @@ def has_property(str_num):
     valid_splits = get_all_partitions(num_len)
 
     for split in valid_splits:
-        if check_split(split, str_num, num_len) == True:
+        if check_split(split, str_num, num_len):
             return True
 
     return False
+
 
 def main():
     for num in range(1, 10000000):
         str_num = str(num)
         if has_property(str_num):
             print(str_num)
+
 
 if __name__ == "__main__":
     main()
