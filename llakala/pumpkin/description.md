@@ -60,14 +60,14 @@ Therefore, 15671567 is nonprimitive - return true.
 ## Through the flake
 
 You can use the flake, via:
-```sh
+```
 nix shell .#pumpkin
 time pumpkin
 ```
 
 ## Manually
 
-```sh
+```
 nix shell github:nixos/nixpkgs/dfb2f12e899db4876308eba6d93455ab7da304cd#pypy3
 time pypy3 llakala/pumpkin/main.py
 ```
