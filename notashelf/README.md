@@ -49,7 +49,7 @@ numbers whose only decomposition would require a leading zero in a block are
 excluded. If the length of the number is **`L`** and the period (block length)
 is **`p`** (`p` divides `L`), then:
 
-```latex
+```math
 N = B \left( 10^{p(k-1)} + 10^{p(k-2)} + \cdots + 10^{p} + 1 \right)
 ```
 
