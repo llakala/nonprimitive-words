@@ -25,6 +25,14 @@ struct Args {
         help = "Whether to print benchmark info."
     )]
     benchmark: bool,
+    #[clap(
+        short,
+        long,
+        env,
+        default_value = "11",
+        help = "First number to start at."
+    )]
+    starting_num: usize,
 }
 
 fn has_property(num: usize) -> bool {
@@ -68,13 +76,13 @@ fn has_property(num: usize) -> bool {
 }
 
 fn main() {
-    let Args { max_checks, benchmark }: Args = Args::parse();
+    let Args { max_checks, benchmark, starting_num }: Args = Args::parse();
 
     let start_time: Instant = Instant::now();
 
     let counter: AtomicUsize = AtomicUsize::new(0);
 
-    (11..max_checks).into_par_iter().for_each(|num| {
+    (starting_num..max_checks).into_par_iter().for_each(|num| {
         if has_property(num) {
             println!("{} has this property!", num);
             counter.fetch_add(1, Ordering::Relaxed);
