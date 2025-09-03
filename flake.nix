@@ -21,7 +21,7 @@
         system: let
           # Prelude
           pkgs = nixpkgs.legacyPackages.${system};
-          lib = pkgs.lib;
+          inherit (pkgs) lib;
 
           # Flake-wide utilities
           utils = let
@@ -46,7 +46,7 @@
               formatter.${system} = utils.treefmt-config.config.build.wrapper;
               checks.${system}.formatting = utils.treefmt-config.config.build.check self;
               devShells.${system}.default = pkgs.mkShell {
-                shellHook = utils.shellHook;
+                inherit (utils) shellHook;
               };
             }
             # Pull in all projects

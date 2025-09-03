@@ -1,4 +1,4 @@
-{...}: {
+_: {
   projectRootFile = ".git/config";
   settings = {
     allow-missing-formatter = false;
