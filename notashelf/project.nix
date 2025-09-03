@@ -12,8 +12,8 @@
         version = "0-unstable-2025-09-03";
 
         src = fs.toSource {
-          root = ./.;
-          fileset = fs.unions [./main.asm];
+          root = ./steampunk/.;
+          fileset = fs.unions [./steampunk/main.asm];
         };
 
         buildPhase = ''
