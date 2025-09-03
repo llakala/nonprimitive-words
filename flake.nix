@@ -41,6 +41,7 @@
           };
         in
           {
+            inherit utils;
             formatter.${system} = utils.treefmt-config.config.build.wrapper;
             devShells.${system}.default = pkgs.mkShell {
               shellHook = utils.shellHook;
