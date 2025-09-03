@@ -40,16 +40,18 @@
             inherit system self pkgs lib utils crane;
           };
         in
-          {
-            inherit utils;
-            formatter.${system} = utils.treefmt-config.config.build.wrapper;
-            checks.${system}.formatting = utils.treefmt-config.config.build.check self;
-            devShells.${system}.default = pkgs.mkShell {
-              shellHook = utils.shellHook;
-            };
-          }
-          # Pull in all projects
-          // utils.mergedProjects
+          utils.recursiveMerge [
+            {
+              inherit utils;
+              formatter.${system} = utils.treefmt-config.config.build.wrapper;
+              checks.${system}.formatting = utils.treefmt-config.config.build.check self;
+              devShells.${system}.default = pkgs.mkShell {
+                shellHook = utils.shellHook;
+              };
+            }
+            # Pull in all projects
+            utils.mergedProjects
+          ]
       )
       # Universally supported systems
       ["x86_64-linux"]
