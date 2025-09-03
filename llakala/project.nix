@@ -2,8 +2,12 @@
   pkgs,
   system,
   ...
-}: {
+}:
+
+{
   packages.${system} = {
-    pumpkinpie = import ./pumpkinpie {inherit pkgs;};
+    pumpkinpie = pkgs.writers.writePyPy3Bin "pumpkinpie"
+      { flakeIgnore = [ "E203" ]; }
+      (builtins.readFile ./pumpkin/main.py);
   };
 }
