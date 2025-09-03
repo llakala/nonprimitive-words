@@ -9,5 +9,9 @@
       enable = true;
       includes = ["Notarin/**/*.rs"];
     };
+    toml-sort = {
+      enable = true;
+      includes = ["Notarin/**/*.toml"];
+    };
   };
 }
