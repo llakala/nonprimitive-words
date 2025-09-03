@@ -4,9 +4,6 @@
     allow-missing-formatter = false;
   };
   programs = {
-    alejandra = {
-      enable = true;
-      package = pkgs.alejandra;
-    };
+    alejandra.enable = true;
   };
 }
