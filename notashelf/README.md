@@ -101,7 +101,7 @@ The program consists of 5 <bullshit>simple</bullshit> steps.
 
 ## What Else
 
-I'm pretty happy with the current implementation. However, it might be possivle
+I'm pretty happy with the current implementation. However, it might be possible
 to extend the program in the future by:
 
 - Replacing divisions with reciprocal multiplication (strength reduction) for
