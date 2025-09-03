@@ -8,7 +8,7 @@ first d digits.
 Repetition condition: n = P * (10^L - 1) / (10^d - 1)
 Equivalent cross-multiplication test:
 
-    n * (10^d - 1) == P * (10^L - 1)
+  n * (10^d - 1) == P * (10^L - 1)
 
 We precompute powers of 10 (POW10[]) and for each possible L (1..19) a short
 list of proper divisors (DIVS[L]) ordered largest-first for earlier exits.
@@ -25,14 +25,14 @@ Homogeneous-digit optimization avoids 128-bit multiplies for prime lengths
 (where the only possible repetition is a single digit repeated).
 
 The divisor list encodes all needed period lengths. Example for small L:
-  L=2:      (a)^2
-  L=3:      (a)^3
-  L=4:      (ab)^2, (a)^4
-  L=6:      (abc)^2, (ab)^3, (a)^6
-  L=8:      (abcd)^2, (ab)^4, (a)^8
+  L=2:  (a)^2
+  L=3:  (a)^3
+  L=4:  (ab)^2, (a)^4
+  L=6:  (abc)^2, (ab)^3, (a)^6
+  L=8:  (abcd)^2, (ab)^4, (a)^8
 
-General lengths up to 19 handled analogously (full 64-bit range).
-Time per number is constant (=<5 candidate checks, usually 1).
+General lengths up to 19 handled analogously (full 64-bit range). Time per
+number is constant (=<5 candidate checks, usually 1).
 
 P.S. so sorry for my comment format
 */
