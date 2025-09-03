@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   system,
   utils,
@@ -7,15 +6,15 @@
 } @ specialArgs: let
   dirs =
     builtins.attrNames
-    (lib.attrsets.filterAttrs (n: v: v == "directory") (builtins.readDir utils.flakePath));
+    (lib.attrsets.filterAttrs (_: v: v == "directory") (builtins.readDir utils.flakePath));
   projectDirs = builtins.filter (dir: builtins.pathExists (utils.flakePath + "/${dir}/project.nix")) dirs;
   # The following function is for processing the project.nix files into a usable format
   # Several formats were supported for QOL and freedom of choice.
   callProjectExpression = dir: let
     project = import "${utils.flakePath}/${dir}/project.nix";
     type = builtins.typeOf project;
-    processProjectExpression = expression:
-    # Derivations are technically sets, but they provide an attr identifying them as derivations
+    processProjectExpression =
+      # Derivations are technically sets, but they provide an attr identifying them as derivations
       if project ? type # Just checking for the attrs existence should be enough
       then {packages.${system}.${dir} = project;}
       # If it's a set, then we'll treat it akin to a module
@@ -41,7 +40,7 @@
           However, the type found was: ${type}
         '';
   in
-    processProjectExpression project;
+    processProjectExpression;
   recurseFunction = function: let
     functionResult = function specialArgs;
     functionType = builtins.typeOf functionResult;

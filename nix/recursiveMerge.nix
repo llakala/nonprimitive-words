@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: let
+{lib, ...}: let
   mergeAttrSets = mergee: merging: let
     mergeeAttrs = lib.attrsToList mergee;
     mergingAttrs = lib.attrsToList merging;
