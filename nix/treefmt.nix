@@ -5,7 +5,9 @@
   };
   programs = {
     alejandra.enable = true;
-    ruff-format.enable = true;
-    asmfmt.enable = true;
+    rustfmt = {
+      enable = true;
+      includes = ["Notarin/**/*.rs"];
+    };
   };
 }
