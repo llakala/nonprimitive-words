@@ -24,5 +24,12 @@ _: {
         ".githooks/**"
       ];
     };
+    mdformat = {
+      enable = true;
+      includes = [
+        "README.md"
+        "Notarin**/*.md"
+      ];
+    };
   };
 }

@@ -11,6 +11,7 @@ Here are some examples:
 - 189189
 
 Here are some NON-examples:
+
 - 121 (palindrome, but no substring to construct it)
 - 1 (the substring needs to repeat at least once)
 
@@ -50,7 +51,6 @@ Also, make sure that your solution gets the same results as other people's
 solutions! To make sure, dump the command output to a file with `> output`, and
 diff yours with someone else's. You should get 1107 solutions from 1 to 10
 million.
-
 
 # Final, most important rule
 
