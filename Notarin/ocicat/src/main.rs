@@ -17,6 +17,14 @@ struct Args {
         help = "How many numbers to check against."
     )]
     max_checks: usize,
+    #[clap(
+        short,
+        long,
+        env,
+        default_value = "true",
+        help = "Whether to print benchmark info."
+    )]
+    benchmark: bool,
 }
 
 fn has_property(num: usize) -> bool {
@@ -60,7 +68,7 @@ fn has_property(num: usize) -> bool {
 }
 
 fn main() {
-    let Args { max_checks }: Args = Args::parse();
+    let Args { max_checks, benchmark }: Args = Args::parse();
 
     let start_time: Instant = Instant::now();
 
@@ -75,6 +83,8 @@ fn main() {
 
     println!("Total found: {}", counter.load(Ordering::Relaxed));
 
-    let elapsed: Duration = start_time.elapsed();
-    println!("Elapsed time: {:.2?}", elapsed);
+    if benchmark {
+        let elapsed: Duration = start_time.elapsed();
+        println!("Elapsed time: {:.2?}", elapsed);
+    }
 }
