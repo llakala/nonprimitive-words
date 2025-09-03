@@ -40,6 +40,14 @@ struct Args {
         help = "If set, will check the single number."
     )]
     check_num: Option<usize>,
+    #[clap(
+        short,
+        long,
+        env,
+        default_value = "false",
+        help = "Print total when finished."
+    )]
+    total: bool,
 }
 
 fn has_property(num: usize) -> bool {
@@ -83,7 +91,7 @@ fn has_property(num: usize) -> bool {
 }
 
 fn main() {
-    let Args { max_checks, benchmark, starting_num, check_num }: Args = Args::parse();
+    let Args { max_checks, benchmark, starting_num, check_num, total }: Args = Args::parse();
 
     let start_time: Instant = Instant::now();
 
@@ -98,7 +106,9 @@ fn main() {
                 }
             });
 
-            println!("Total found: {}", counter.load(Ordering::Relaxed));
+            if total {
+                println!("Total found: {}", counter.load(Ordering::Relaxed));
+            }
         },
         Some(num) => {
             match has_property(num) {
