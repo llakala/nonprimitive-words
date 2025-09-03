@@ -47,8 +47,11 @@ def has_property(str_num):
 
     return False
 
+def main():
+    for num in range(1, 10000000):
+        str_num = str(num)
+        if has_property(str_num):
+            print(str_num)
 
-for num in range(1, 10000000):
-    str_num = str(num)
-    if has_property(str_num):
-        print(str_num)
+if __name__ == "__main__":
+    main()
