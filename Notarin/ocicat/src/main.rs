@@ -101,7 +101,7 @@ fn main() {
 
             (starting_num..max_checks).into_par_iter().for_each(|num| {
                 if has_property(num) {
-                    println!("{} has this property!", num);
+                    println!("{}", num);
                     counter.fetch_add(1, Ordering::Relaxed);
                 }
             });
