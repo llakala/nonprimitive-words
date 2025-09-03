@@ -49,10 +49,8 @@ numbers whose only decomposition would require a leading zero in a block are
 excluded. If the length of the number is **`L`** and the period (block length)
 is **`p`** (`p` divides `L`), then:
 
-<!-- TODO: express this with LaTeX? -->
-
-```plaintext
-N = B * (10^{p(k-1)} + 10^{p(k-2)} + ... + 10^{p} + 1)
+```latex
+N = B \left( 10^{p(k-1)} + 10^{p(k-2)} + \cdots + 10^{p} + 1 \right)
 ```
 
 The multiplier is a geometric series = `(10^{pk} − 1) / (10^{p} − 1)`. For small
