@@ -1,0 +1,3 @@
+# Ignore assembler result
+./main
+./main.o
