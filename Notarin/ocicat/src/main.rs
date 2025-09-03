@@ -1,9 +1,23 @@
+use clap::Parser;
+use rayon::iter::IntoParallelIterator;
 use rayon::iter::ParallelIterator;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::time::{Duration, Instant};
-use rayon::iter::IntoParallelIterator;
 
 const MAX_DIGITS: usize = 20;
+
+#[derive(Parser)]
+#[command(version, about, author)]
+struct Args {
+    #[clap(
+        short,
+        long,
+        env,
+        default_value = "10000000",
+        help = "How many numbers to check against."
+    )]
+    max_checks: usize,
+}
 
 fn has_property(num: usize) -> bool {
     let mut digits: [u8; 20] = [0u8; MAX_DIGITS];
@@ -46,18 +60,18 @@ fn has_property(num: usize) -> bool {
 }
 
 fn main() {
+    let Args { max_checks }: Args = Args::parse();
+
     let start_time: Instant = Instant::now();
 
     let counter: AtomicUsize = AtomicUsize::new(0);
 
-    (11..10_000_000usize)
-        .into_par_iter()
-        .for_each(|num| {
-            if has_property(num) {
-                println!("{} has this property!", num);
-                counter.fetch_add(1, Ordering::Relaxed);
-            }
-        });
+    (11..max_checks).into_par_iter().for_each(|num| {
+        if has_property(num) {
+            println!("{} has this property!", num);
+            counter.fetch_add(1, Ordering::Relaxed);
+        }
+    });
 
     println!("Total found: {}", counter.load(Ordering::Relaxed));
 
