@@ -1,4 +1,4 @@
-# What are the rules?
+# What is this?
 
 Your program should define a function that, given any number, returns whether
 it's a **non-primitive word**.
@@ -51,4 +51,8 @@ solutions! To make sure, dump the command output to a file with `> output`, and
 diff yours with someone else's. You should get 1107 solutions from 1 to 10
 million.
 
-Thanks for playing! Have fun.
+
+# Final, most important rule
+
+Have fun! A cheaty solution is fine if it's cool. Speed wins one award, coolness
+wins another.

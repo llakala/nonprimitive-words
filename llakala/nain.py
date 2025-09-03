@@ -48,7 +48,7 @@ def has_property(str_num):
     return False
 
 
-for num in range(1, 1000000000):
+for num in range(1, 10000000):
     str_num = str(num)
     if has_property(str_num):
         print(str_num)
