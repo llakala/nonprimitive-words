@@ -21,4 +21,11 @@ in {
       };
     };
   };
+  checks.${system}.clippy = craneLib.cargoClippy {
+    src = ./ocicat;
+    cargoArtifacts = craneLib.buildDepsOnly {
+      src = ./ocicat;
+    };
+    cargoClippyExtraArgs = "-- --deny warnings";
+  };
 }
