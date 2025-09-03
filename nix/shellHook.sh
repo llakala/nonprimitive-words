@@ -1,12 +1,30 @@
 #!/user/bin/env bash
 
-oldHookDir=$(git config --local core.hooksPath)
+find_flake_root() {
+  local dir=$PWD
+  while [ "$dir" != "/" ]; do
+    if [ -f "$dir/flake.nix" ]; then
+      echo "$dir"
+      return 0
+    fi
+    dir=$(dirname "$dir")
+  done
+  return 1
+}
 
-if [ "$oldHookDir" != "$PWD/.githooks" ]; then
-  read -rp "Set git hooks to $PWD/.githooks? (y/n) " answer
+oldHookDir=$(git config --local core.hooksPath)
+newHookDir="$(find_flake_root)/.githooks"
+
+if [ -z "$newHookDir" ]; then
+    echo "Error: Could not find flake.nix to determine the project root."
+    exit 1
+fi
+
+if [ "$oldHookDir" != "$newHookDir" ]; then
+  read -rp "Set git hooks to $newHookDir? (y/n) " answer
   if [ "$answer" = "y" ]; then
-    git config core.hooksPath "$PWD"/.githooks
-    echo "Set git hooks to $PWD/.githooks"
+    git config core.hooksPath "$newHookDir"
+    echo "Set git hooks to $newHookDir"
   else
     echo "Skipping git hooks setup"
   fi
