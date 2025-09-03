@@ -5,10 +5,10 @@
 }: let
   python3Packages = pkgs.python3Packages;
 in {
-  packages.${system} = {
-    llakala = let
-      pyproject = builtins.fromTOML (builtins.readFile ./pyproject.toml);
-    in (
+  packages.${system} = let
+    pyproject = builtins.fromTOML (builtins.readFile ./pyproject.toml);
+  in {
+    ${pyproject.project.name} = (
       python3Packages.buildPythonApplication {
         src = ./.;
         pname = pyproject.project.name;
