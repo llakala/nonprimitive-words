@@ -21,7 +21,7 @@ struct Args {
         short,
         long,
         env,
-        default_value = "true",
+        default_value = "false",
         help = "Whether to print benchmark info."
     )]
     benchmark: bool,
