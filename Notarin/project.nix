@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   crane,
   system,
   ...
@@ -16,6 +17,7 @@ in {
       ];
       meta = {
         description = "A rust algorithm solving A239019.";
+        maintainers = [lib.maintainers.Notarin];
       };
     };
   };
