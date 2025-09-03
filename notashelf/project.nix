@@ -3,34 +3,42 @@
   lib,
   ...
 }: {
-  packages.x86_64-linux = let
-    name = "steampunk";
-  in {
-    ${name} = pkgs.stdenv.mkDerivation {
-      name = name;
-      src = ./.;
+  packages.x86_64-linux = {
+    "steampunk" = let
+      fs = lib.fileset;
+    in
+      pkgs.stdenv.mkDerivation {
+        pname = "steampunk";
+        version = "0-unstable-2025-09-03";
 
-      buildPhase = ''
-        runHook preBuild
+        src = fs.toSource {
+          root = ./.;
+          fileset = [./main.asm];
+        };
 
-        ${lib.getExe pkgs.nasm} -O3 -felf64 main.asm
-        ld -s -o main main.o
+        buildPhase = ''
+          runHook preBuild
 
-        runHook postBuild
-      '';
+          ${lib.getExe pkgs.nasm} -O3 -felf64 main.asm
+          ld -s -o steampunk main.o
 
-      installPhase = ''
-        runHook preInstall
+          runHook postBuild
+        '';
 
-        mkdir -p $out/bin
-        cp main $out/bin
+        installPhase = ''
+          runHook preInstall
 
-        runHook postInstall
-      '';
+          mkdir -p $out/bin
+          install -Dm755 steampunl $out/bin
 
-      meta = {
-        mainProgram = "main";
+          runHook postInstall
+        '';
+
+        meta = {
+          description = "x86-64 assembly implementation for OEIS A239019";
+          mainProgram = "steampunk";
+          maintainers = [lib.maintainers.NotAShelf];
+        };
       };
-    };
   };
 }
