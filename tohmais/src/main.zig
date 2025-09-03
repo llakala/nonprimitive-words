@@ -26,7 +26,7 @@ test "simple test" {
 }
 
 test "use other module" {
-    try std.testing.expectEqual(@as(i32, 150), lib.add(100, 50));
+    try std.testing.expectEqual(@as(i32, 150), 100 + 50);
 }
 
 test "fuzz example" {

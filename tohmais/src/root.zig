@@ -4,10 +4,19 @@
 const std = @import("std");
 const testing = std.testing;
 
-pub export fn add(a: i32, b: i32) i32 {
-    return a + b;
+pub export fn substring_to_max(max: u32) u32 {
+    var substring_count: u32 = 0;
+
+    for (0..max) |i| {
+        substring_count += @intFromBool(num_substring(i));
+    }
+    return substring_count;
+}
+
+pub export fn num_substring(i: u64) bool {
+    return i != 0;
 }
 
 test "basic add functionality" {
-    try testing.expect(add(3, 7) == 10);
+    try testing.expect(substring_to_max(1000000) == 1107);
 }

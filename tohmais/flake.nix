@@ -15,27 +15,6 @@
         })
         systems);
   in {
-    packages = forAllSystems (system: let
-      pkgs = import nixpkgs {inherit system;};
-    in {
-      default = pkgs.stdenv.mkDerivation {
-        pname = "nonprimative-words";
-        version = "0.1.0";
-        src = ./.;
-
-        nativeBuildInputs = [pkgs.zig];
-
-        buildPhase = ''
-          zig build -Drelease-safe=true
-        '';
-
-        installPhase = ''
-          mkdir -p $out/bin
-          cp zig-out/bin/* $out/bin/
-        '';
-      };
-    });
-
     devShells = forAllSystems (system: let
       pkgs = import nixpkgs {inherit system;};
     in {
