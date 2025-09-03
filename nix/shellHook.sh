@@ -1,3 +1,5 @@
+#!/user/bin/env bash
+
 oldHookDir=$(git config --local core.hooksPath)
 
 if [ "$oldHookDir" != "$PWD/.githooks" ]; then

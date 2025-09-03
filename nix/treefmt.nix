@@ -13,5 +13,12 @@ _: {
       enable = true;
       includes = ["Notarin/**/*.toml"];
     };
+    shellcheck = {
+      enable = true;
+      includes = [
+        "nix/*.sh"
+        ".envrc"
+      ];
+    };
   };
 }
