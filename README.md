@@ -1,58 +1,88 @@
 # What is this?
 
-Your program should define a function that, given any number, returns whether
-it's a **non-primitive word**.
+This is a repo consisting of people's attempts to calculate whether a number is
+a **nonprimitive word** as fast as possible.
 
-A nonprimitive word can be constructed through concatenating its substrings.
-Here are some examples:
+Each program defines a function that, given any number, returns whether it's a
+non-primitive word. The function is then typically run for all numbers from
+1 to 10 million. However, the goal is to create a generic function - checking a
+large set of numbers is just a good way of determining how efficient a function
+may be.
 
-- 111
-- 2323
-- 189189
+# Okay, what's a nonprimitive word?
+
+A nonprimitive word is a sequence of characters that could be constructed by
+concatenating some string with itself multiple times. This can intuitively be
+thought of as the initial part of the string repeating over and over.
+
+Nonprimitive words are a general concept for any set of characters. For example,
+`abcabc` is a valid solution. However, this repo only focuses on nontrivial
+words made up of the digits 0-9.
+
+Here are some examples of nonprimitive words:
+
+- 111 (1 repeating three times)
+- 2323 (23 repeating two times)
+- 189189 (189 repeating two times)
 
 Here are some NON-examples:
 
-- 121 (palindrome, but no substring to construct it)
 - 1 (the substring needs to repeat at least once)
+- 189 (again, the substring must repeat again)
 
-For more, see the [OEIS entry](https://oeis.org/A239019), and the [list of the
-first 10,000 elements of the set](https://oeis.org/A239019/b239019.txt).
+One specific non-example which often trips people up is 1221. This is **not** a
+nonprimitive word. If it was, it would have some initial substring that could be
+repeated to construct the rest of the word. But repeating 1 gives 1111, and
+repeating 12 gives us 1212. Therefore, 1221 isn't a valid solution.
 
-# Can't I just...
-
-There are some ways to trivialize this, which aren't allowed. Some of these are
-cool in their own ways, but if we allowed them, the spirit of the competition
-would go away. You can't:
-
-1. Precompute anything meaningful
-
-Precomputing the factors of the first 10 numbers is fine - that's not exactly
-meaningful. But if you precomputed the correct split for every number, that's
-only a step away from reading the correct values from a text file
-
-2. Construct the outputs rather than looping through all numbers
-
-Rather than checking if a given number was non-primitive, you could
-hypothetically just make all the primitives, and then concatenate them together
-for larger versions. But where's the fun in that? The idea of the challenge is
-to optimize your ability to determine WHETHER a number is primitive - not WHAT
-numbers are primitive. We just loop through numbers for testing purposes.
+For more, see the [OEIS entry](https://oeis.org/A239019), and the [list of
+the first 10,000 elements of the set](https://oeis.org/A239019/b239019.txt).
 
 # How do I share my solution?
 
-Put your code in a folder with your Github username! While it's not required,
-it's encouraged to provide a way to reproduce your result. If you SAY your code
-is the fastest, but we can't run it, how do we know you're telling the truth?
+If you have some code that solves this, and you'd like to share it, you can:
 
-Be reproducible in however suits you best - a file with instructions, a
-devshell, whatever.
+1. Make a PR
+1. Ask for commit access and commit it yourself
 
-Also, make sure that your solution gets the same results as other people's
-solutions! To make sure, dump the command output to a file with `> output`, and
-diff yours with someone else's. You should get 1107 solutions from 1 to 10
-million.
+If you want to be a committer, just pinky promise that you'll only touch *your*
+solution, and won't mess with other people's code. I don't want to make everyone
+do PRs, but if people abuse commit access, I'll have to be stricter.
 
-# Final, most important rule
+Once you have access, put your code in a folder named after your Github
+username. While it's not required, it's encouraged to provide _some_ way to
+reproduce your result. We have infrastructure set up which allows you to package
+your program through Nix (see other people's code for examples). However, if
+you're not feeling nixy today, providing a text file with commands to run is
+good enough.
 
-Have fun! A cheaty solution is fine if it's cool. Speed wins one award, coolness
-wins another.
+Make sure that your program is actually getting the right results. You can dump
+your output to a file with `> output.txt`, and diff it with the output of
+someone else's program. You should get 1107 solutions from 1 to 10 million.
+
+# What are the rules?
+
+The goal of this repo is to allow people to share solutions - and too many
+unnecessary rules would stifle that. However, there are a few "suggestions" to
+follow. If you think you can do something cool in a way that doesn't follow
+these suggestions, just note that, and go to town.
+
+1. Avoid precomputing where possible
+
+Precomputing can make things very fast. However, taking precomputing to its
+natural extension, the "optimal" solution is to write all the answers down, and
+print them out at runtime. Rather than writing down data in a file and reading
+from it, see if you can instead generate that data at runtime, and cache it for
+quick access.
+
+2. Try to make a generalizable function
+
+The 1 to 10 million range is used so people can compare their programs easily.
+If your code ONLY works for this range, it's a little boring. If you have a cool
+optimization that only works for small inputs, feel free to use it - but see if
+it's possible to fall back to slower methods if the input is too large, rather
+than rejecting the input or giving the wrong solution.
+
+# Final (most important) rule
+
+Have fun! A cheaty solution is fine if it's cool.
