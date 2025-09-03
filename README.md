@@ -13,7 +13,7 @@ may be.
 
 A nonprimitive word is a sequence of characters that could be constructed by
 concatenating some string with itself multiple times. This can intuitively be
-thought of as the initial part of the string repeating over and over.
+thought of as the initial part of the string repeating at least once.
 
 Nonprimitive words are a general concept for any set of characters. For example,
 `abcabc` is a valid solution. However, this repo only focuses on nontrivial
