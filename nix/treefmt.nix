@@ -21,6 +21,7 @@ _: {
       includes = [
         "nix/*.sh"
         ".envrc"
+        ".githooks/**"
       ];
     };
   };
