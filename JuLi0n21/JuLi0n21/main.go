@@ -85,5 +85,9 @@ func checkNonPrimitiveContains(value string) bool {
 		return false
 	}
 	concated := value + value
+	// when doubling a primitive word the original will not befound if the ends are cut
+	// e.g. ab -> abab -> ba
+	// however for a non-primitive word it will, because it already repeats itself, basically shifting the word
+	// e.g. abab -> abababab -> b[abab]a
 	return strings.Contains(concated[1:len(concated)-1], value)
 }
