@@ -1,32 +1,55 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"strconv"
+	"strings"
 	"time"
 )
 
 func main() {
 
+	upper := flag.Int("limit", 10_000_000, "Upper bound for numeric loop")
+	custom := flag.String("custom", "", "Custom string to test (skips loop)")
+	method := flag.String("method", "normal", "Method to use: normal | contains")
+	timing := flag.Bool("time", true, "Print execution timing (default: true)")
+
+	flag.Parse()
+
+	var fn func(string) bool
+	switch *method {
+	case "contains":
+		fn = checkNonPrimitiveContains
+	default:
+		fn = checkNonPrimitive
+	}
+
 	start := time.Now()
-	for i := range 10_000_000 {
-		str := strconv.Itoa(i)
-		if checkNonPrimitive(str) {
-			fmt.Println(str)
+
+	if *custom != "" {
+		fmt.Printf("Testing string %q -> %v\n", *custom, fn(*custom))
+	} else {
+		for i := 0; i < *upper; i++ {
+			str := strconv.Itoa(i)
+			if fn(str) {
+				fmt.Println(str)
+			}
 		}
 	}
-	fmt.Println("Took: ", time.Since(start).Milliseconds(), "ms")
+
+	if *timing {
+		fmt.Printf("Took: %d ms\n", time.Since(start).Milliseconds())
+	}
 
 }
 
 func checkNonPrimitive(value string) bool {
 
-	devisors := findDevisors(value)
-
-	for _, divs := range devisors {
+	for divs := 2; divs <= len(value); divs++ {
 		subStrings := []string{}
 
-		if divs == 1 {
+		if len(value)%divs != 0 {
 			continue
 		}
 
@@ -57,21 +80,10 @@ func checkNonPrimitive(value string) bool {
 	return false
 }
 
-func findDevisors(value string) []int {
-
-	var devisiors = []int{}
-	if len(value) == 1 {
-		return []int{}
+func checkNonPrimitiveContains(value string) bool {
+	if len(value) < 2 {
+		return false
 	}
-
-	devisiors = append(devisiors, len(value))
-
-	for i := 1; i <= len(value)/2; i++ {
-		if len(value)%i == 0 {
-			devisiors = append(devisiors, i)
-		}
-	}
-
-	return devisiors
-
+	concated := value + value
+	return strings.Contains(concated[1:len(concated)-1], value)
 }
