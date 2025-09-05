@@ -1,6 +1,3 @@
 #!/usr/bin/env bash
 
-# QOL auto-format
-nix fmt
-
 nix flake check
