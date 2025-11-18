@@ -1,16 +1,11 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
     self,
     nixpkgs,
-    treefmt-nix,
     ...
   }: (
     # Provides the variable `system`. More technically, it creates a copy per system, then merges them all together
@@ -27,7 +22,6 @@
           in {
             recursiveMerge = import "${utilsDir}/recursiveMerge.nix" specialArgs;
             shellHook = builtins.readFile "${utilsDir}/shellHook.sh";
-            treefmt-config = treefmt-nix.lib.evalModule pkgs "${utilsDir}/treefmt.nix";
             mergedProjects = import "${utilsDir}/projectLoading.nix" specialArgs;
             flakePath = ./.;
           };
@@ -40,8 +34,8 @@
         in
           utils.recursiveMerge [
             {
-              formatter.${system} = utils.treefmt-config.config.build.wrapper;
-              checks.${system}.formatting = utils.treefmt-config.config.build.check self;
+              formatter.${system} = pkgs.callPackage ./nix/treefmt.nix {};
+              checks.${system}.formatting = self.formatter.${system};
               devShells.${system}.default = pkgs.mkShell {
                 inherit (utils) shellHook;
               };
