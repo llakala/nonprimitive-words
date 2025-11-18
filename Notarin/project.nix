@@ -1,10 +1,10 @@
 {
   pkgs,
   lib,
-  crane,
   system,
   ...
 }: let
+  crane = builtins.getFlake "github:ipetkov/crane/0cea393fffb39575c46b7a0318386467272182fe";
   craneLib = crane.mkLib pkgs;
 in {
   packages.${system} = let
